@@ -9,7 +9,6 @@
 #include <iostream>
 #include <stdlib.h>
 
-#include "exampleConfig.h"
 #include "example.h"
 
 /*
@@ -17,16 +16,7 @@
  * CMake definitions (here the version number) from source code.
  */
 int main() {
-  std::cout << "C++ Boiler Plate v"
-            << PROJECT_VERSION_MAJOR
-            << "."
-            << PROJECT_VERSION_MINOR
-            << "."
-            << PROJECT_VERSION_PATCH
-            << "."
-            << PROJECT_VERSION_TWEAK
-            << std::endl;
-  std::system("cat ../LICENSE");
+  std::cout << "Start of SPD1 on C++ Boiler Plate " << std::endl;
 
   // Bring in the dummy class from the example source,
   // just to show that it is accessible from main.cpp.
