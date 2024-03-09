@@ -108,11 +108,12 @@ void Problem<Item>::savePermResult(const std::vector<Item> best_order, int best_
     exit(EXIT_FAILURE);
   }
 
+  output_file << "Kolejność wykonania zadań: ";
   for (const Item& item : best_order) {
     output_file << item.get_id() << " ";
   }
 
-  output_file << best_time << std::endl;
+  output_file << "   Czas: "<< best_time << std::endl;
   output_file.close();
 }
 
