@@ -25,6 +25,8 @@ class Problem{
     void createOrClearFile(const std::string file_name);
     void savePermResult(const std::vector<Item> best_order, const int best_time, std::string result_file);
     void permutationSort();
+    void occurTimeSort();
+    void idleTimeSort();
 };
 
 template<class Item>
@@ -73,7 +75,7 @@ int Problem<Item>::workTime(){
 
     for (int i=0; i<this->list_size; i++) { 
       if(total_work_time<this->get_item(i).get_occur_time()){
-        total_work_time += this->get_item(i).get_occur_time();
+        total_work_time += (this->get_item(i).get_occur_time() - total_work_time);
       } 
       total_work_time += this->get_item(i).get_work_time();
       total_work_time += this->get_item(i).get_idle_time();
@@ -97,6 +99,7 @@ void Problem<Item>::createOrClearFile(const std::string file_name){
       exit(EXIT_FAILURE);
     }
   }
+  output_file.close();
 }
 
 template<class Item>
@@ -108,12 +111,11 @@ void Problem<Item>::savePermResult(const std::vector<Item> best_order, int best_
     exit(EXIT_FAILURE);
   }
 
-  output_file << "Kolejność wykonania zadań: ";
   for (const Item& item : best_order) {
     output_file << item.get_id() << " ";
   }
 
-  output_file << "   Czas: "<< best_time << std::endl;
+  output_file << "  Czas: "<< best_time << std::endl;
   output_file.close();
 }
 
@@ -143,14 +145,44 @@ void Problem<Item>::permutationSort(){
 
     } while (std::next_permutation(main_list.begin(), main_list.end()));
 
-
+  std::cout << "-------------------------Przegląd zupełny-------------------------" << std::endl;
   std::cout << "Optymalna kolejność wykonywania powyższych zadań jest dla ułożenia: ";
   for (Item& item : best_order) { 
     std::cout << item.get_id(); 
   }
-  std::cout << std::endl << "Czas potrzebny na wykonanie zadania w powyższej kolejności to: " << best_time << std::endl;
+  std::cout << std::endl << "Czas potrzebny na wykonanie zadania w powyższej kolejności to: " << best_time << std::endl << std::endl;
 
   main_list = original;
-
 }
 
+template<class Item>
+void Problem<Item>::occurTimeSort(){
+  std::vector<Item> original = main_list;
+  std::sort(main_list.begin(), main_list.end(),[](const Item& a, const Item& b) {return a.compareByOccurTime(b);});
+
+  int best_time = this->workTime();
+  std::cout << "------------Algorytm heurystyczny - r (termin dostępności)--------" << std::endl;
+  std::cout << "Optymalna kolejność wykonywania powyższych zadań jest dla ułożenia: ";
+  for (Item& item : main_list) { 
+    std::cout << item.get_id(); 
+  }
+  std::cout << std::endl << "Czas potrzebny na wykonanie zadania w powyższej kolejności to: " << best_time << std::endl << std::endl;
+
+  main_list = original;
+}
+
+template<class Item>
+void Problem<Item>::idleTimeSort(){
+  std::vector<Item> original = main_list;
+  std::sort(main_list.begin(), main_list.end(),[](const Item& a, const Item& b) {return a.compareByIdleTime(b);});
+
+  int best_time = this->workTime();
+  std::cout << "------------Algorytm heurystyczny - q (czas stygnięcia)-----------" << std::endl;
+  std::cout << "Optymalna kolejność wykonywania powyższych zadań jest dla ułożenia: ";
+  for (Item& item : main_list) { 
+    std::cout << item.get_id(); 
+  }
+  std::cout << std::endl << "Czas potrzebny na wykonanie zadania w powyższej kolejności to: " << best_time << std::endl << std::endl;
+
+  main_list = original;
+}
