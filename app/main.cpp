@@ -7,7 +7,6 @@
 #endif
 
 #include <iostream>
-#include <stdlib.h>
 
 #include "problem.h"
 
@@ -20,7 +19,9 @@ int main(int argc, char *argv[]) {
   Problem<Item<int>> problem;
   problem.loadFromFile(argv[1]);
 
-  std::cout << problem.get_item(3).get_work_time() << std::endl;
+  //std::cout << problem.get_item(3).get_work_time() << std::endl;
+
+  problem.permutationSort();
 
   return 0;
 }

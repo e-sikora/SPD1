@@ -12,7 +12,8 @@ class Item {
     
   public:
     int get_id(){ return id; }
-    int get_occut_time(){ return occur_time; }
+    int get_id() const { return id; }
+    int get_occur_time(){ return occur_time; }
     int get_work_time(){ return work_time; }  
     int get_idle_time(){ return idle_time; }
 
@@ -25,6 +26,7 @@ class Item {
       idle_time = idle_time_s;
     } 
 
-  
-
+    bool operator<(const Item& other) const {
+        return id < other.id;
+    }
 };
