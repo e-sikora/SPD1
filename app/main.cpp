@@ -9,17 +9,18 @@
 #include <iostream>
 #include <stdlib.h>
 
-#include "example.h"
+#include "problem.h"
 
-/*
- * Simple main program that demontrates how access
- * CMake definitions (here the version number) from source code.
- */
-int main() {
-  std::cout << "Start of SPD1 on C++ Boiler Plate " << std::endl;
+int main(int argc, char *argv[]) {
+  if(argc!=2){
+    std::cout << "Błędne wywołanie programu! Program kończy działanie!" << std::endl;
+    exit(EXIT_FAILURE);
+  }
 
-  // Bring in the dummy class from the example source,
-  // just to show that it is accessible from main.cpp.
-  Dummy d = Dummy();
-  return d.doSomething() ? 0 : -1;
+  Problem<Item<int>> problem;
+  problem.loadFromFile(argv[1]);
+
+  std::cout << problem.get_item(3).get_work_time() << std::endl;
+
+  return 0;
 }
