@@ -19,9 +19,9 @@ int main(int argc, char *argv[]) {
   Problem<Item<int>> problem;
   problem.loadFromFile(argv[1]);
 
-  //std::cout << problem.get_item(3).get_work_time() << std::endl;
-
   problem.permutationSort();
+  problem.occurTimeSort();
+  problem.idleTimeSort();
 
   return 0;
 }
