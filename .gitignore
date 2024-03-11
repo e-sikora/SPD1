@@ -34,3 +34,6 @@
 
 # Build directory
 build/
+cmake-build-default/
+.idea
+
