@@ -38,3 +38,28 @@ class Item {
       return idle_time < other.idle_time;
     }
 };
+
+#ifdef ENABLE_DOCTEST_IN_LIBRARY
+#include "doctest/doctest.h"
+TEST_CASE("Item class") {
+    // Default constructor
+    Item<int> defaultItem;
+    CHECK(defaultItem.get_id() == 0);
+    CHECK(defaultItem.get_occur_time() == 0);
+    CHECK(defaultItem.get_work_time() == 0);
+    CHECK(defaultItem.get_idle_time() == 0);
+
+    // Parameterized constructor
+    Item<int> item1(1, 10, 5, 2);
+    CHECK(item1.get_id() == 1);
+    CHECK(item1.get_occur_time() == 10);
+    CHECK(item1.get_work_time() == 5);
+    CHECK(item1.get_idle_time() == 2);
+
+    // Comparison operators
+    Item<int> item2(2, 15, 3, 7);
+    CHECK(item1 < item2);
+    CHECK(item1.compareByOccurTime(item2));
+    CHECK(item1.compareByIdleTime(item2));
+}
+#endif
