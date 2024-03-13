@@ -30,7 +30,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 #include(Colors)
 #include(CTest)
 include(Doctest)
-#include(Documentation)
+include(Documentation)
 #include(LTO)
 #include(Misc)
 include(Warnings)
@@ -43,6 +43,8 @@ include(Warnings)
 # --------------------------------------------------------------------------------
 set(SOURCES          # All .cpp files in src/
         src/example.cpp
+        src/item.cpp
+        src/problem.cpp
 )
 set(TESTFILES        # All .cpp files in tests/
         tests/main.cpp
