@@ -85,16 +85,12 @@ public:
 };
 
 
-
 #ifdef ENABLE_DOCTEST_IN_LIBRARY
 
 #include "doctest/doctest.h"
 #include "item.h"
 
-//TEST_CASE("Testing Problem class constructors")
-//{
-//    Problem<Item<int>> problem;
-//}
+
 TEST_CASE("Problem class tests") {
     int workTime_forTestSet = 62;
     // Test loading from file
@@ -129,13 +125,14 @@ TEST_CASE("Problem class tests") {
     }
 
     SUBCASE("Checking if the result is saved correctly") {
+        #include <cstdio>
         // Create a sample vector and file name
-        Item<int> problem1 = Item<int>(1,1,1,1);
-        Item<int> problem2 = Item<int>(2,2,2,2);
-        Item<int> problem3 = Item<int>(3,3,3,3);
+        Item<int> problem1 = Item<int>(1, 1, 1, 1);
+        Item<int> problem2 = Item<int>(2, 2, 2, 2);
+        Item<int> problem3 = Item<int>(3, 3, 3, 3);
         std::vector<Item<int>> best_order = {problem1, problem2, problem3};
         int best_time = 10;
-        std::string result_file = "../data/test_result.txt";
+        const char* result_file = "../data/test_result.txt";
 
         // Call the function
         Problem<Item<int>> problem;
@@ -158,6 +155,7 @@ TEST_CASE("Problem class tests") {
         CHECK(last_line == expected_value);
 
         input_file.close();
+        REQUIRE(std::remove(result_file) == 0);
     }
 
     SUBCASE("Checking calculations") {
@@ -178,9 +176,8 @@ TEST_CASE("permutationSort") {
         CHECK(problem.workTime() == 62);
 
         std::vector<int> result_order;
-        std::vector<int> expected_order = {1,2,3,4,5,6};
-        for(int i = 0; i < int(problem.get_size()); i++)
-        {
+        std::vector<int> expected_order = {1, 2, 3, 4, 5, 6};
+        for (int i = 0; i < int(problem.get_size()); i++) {
             result_order.push_back(problem.get_item(i).get_id());
         }
         CHECK(result_order == expected_order);
@@ -196,9 +193,8 @@ TEST_CASE("occurTimeSort") {
         CHECK(problem.workTime() == 62);
 
         std::vector<int> result_order;
-        std::vector<int> expected_order = {1,2,3,4,5,6};
-        for(int i = 0; i < int(problem.get_size()); i++)
-        {
+        std::vector<int> expected_order = {1, 2, 3, 4, 5, 6};
+        for (int i = 0; i < int(problem.get_size()); i++) {
             result_order.push_back(problem.get_item(i).get_id());
         }
         CHECK(result_order == expected_order);
@@ -214,17 +210,13 @@ TEST_CASE("idleTimeSort") {
         CHECK(problem.workTime() == 62);
 
         std::vector<int> result_order;
-        std::vector<int> expected_order = {1,2,3,4,5,6};
-        for(int i = 0; i < int(problem.get_size()); i++)
-        {
+        std::vector<int> expected_order = {1, 2, 3, 4, 5, 6};
+        for (int i = 0; i < int(problem.get_size()); i++) {
             result_order.push_back(problem.get_item(i).get_id());
         }
         CHECK(result_order == expected_order);
     }
 }
-
-
-
 
 
 #endif
