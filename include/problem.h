@@ -79,7 +79,8 @@ public:
     void occurTimeSort();
 
     /**
-     * @brief Perform a sort based on item idle time.
+     * @brief 
+     * 
      */
     void idleTimeSort();
 };
@@ -173,7 +174,7 @@ TEST_CASE("permutationSort") {
 
     SUBCASE("Optimal order should be {?}") {
         problem.permutationSort();
-        CHECK(problem.workTime() == 62);
+        CHECK(problem.workTime() == 32);
 
         std::vector<int> result_order;
         std::vector<int> expected_order = {1, 2, 3, 4, 5, 6};

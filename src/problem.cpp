@@ -50,13 +50,24 @@ void Problem<Item>::loadFromFile(const std::string &file_name) {
 template<class Item>
 int Problem<Item>::workTime() {
     int total_work_time = 0;
+    std::vector<int> post_end_time;
 
     for (int i = 0; i < this->list_size; i++) {
         if (total_work_time < this->get_item(i).get_occur_time()) {
             total_work_time += (this->get_item(i).get_occur_time() - total_work_time);
         }
         total_work_time += this->get_item(i).get_work_time();
-        total_work_time += this->get_item(i).get_idle_time();
+        post_end_time.push_back(total_work_time + this->get_item(i).get_idle_time());
+        //total_work_time += this->get_item(i).get_idle_time();
+    }
+
+    int helper = 0;
+    for (int i = 0; i < int(post_end_time.size()); i++){
+        helper = post_end_time[i] - total_work_time;
+
+        if(helper > 0){
+            total_work_time += helper;
+        }    
     }
 
     return total_work_time;
