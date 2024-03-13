@@ -219,5 +219,4 @@ TEST_CASE("idleTimeSort") {
     }
 }
 
-
 #endif
