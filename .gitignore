@@ -37,3 +37,6 @@ build/
 cmake-build-default/
 .idea
 doc/
+html/
+latex/
+
