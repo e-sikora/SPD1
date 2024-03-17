@@ -17,7 +17,6 @@ private:
     int idle_time; ///< The idle time associated with the item.
 
 public:
-
     /**
    * @brief Default constructor initializing all attributes to zero.
    */
@@ -38,28 +37,49 @@ public:
      *
      * @return int The ID of the item.
      */
-    int get_id() const { return id; }
+    int getId() const { return id; }
 
     /**
      * @brief Getter method for the occurrence time of the item.
      *
      * @return int The occurrence time of the item.
      */
-    int get_occur_time() const { return occur_time; }
+    int getOccurTime() const { return occur_time; }
 
     /**
     * @brief Getter method for the work time required for the item.
     *
     * @return int The work time required for the item.
     */
-    int get_work_time() const { return work_time; }
+    int getWorkTime() const { return work_time; }
 
     /**
    * @brief Getter method for the idle time associated with the item.
    *
    * @return int The idle time associated with the item.
    */
-    int get_idle_time() const { return idle_time; }
+    void setWorkTime(int work_time_s) { work_time = work_time_s; }
+
+    /**
+   * @brief Getter method for the idle time associated with the item.
+   *
+   * @return int The idle time associated with the item.
+   */
+    void workTimeDecrement() { work_time -= 1; }
+
+    /**
+   * @brief Getter method for the idle time associated with the item.
+   *
+   * @return int The idle time associated with the item.
+   */
+    int getIdleTime() const { return idle_time; }
+
+    /**
+   * @brief Getter method for the idle time associated with the item.
+   *
+   * @return int The idle time associated with the item.
+   */
+    void setIdleTime(int idle_time_s) { idle_time = idle_time_s; } 
 
     /**
     * @brief Overloaded less than operator for comparing items based on their IDs.
@@ -97,17 +117,17 @@ public:
 TEST_CASE("Item class") {
     // Default constructor
     Item<int> defaultItem;
-    CHECK(defaultItem.get_id() == 0);
-    CHECK(defaultItem.get_occur_time() == 0);
-    CHECK(defaultItem.get_work_time() == 0);
-    CHECK(defaultItem.get_idle_time() == 0);
+    CHECK(defaultItem.getId() == 0);
+    CHECK(defaultItem.getOccurTime() == 0);
+    CHECK(defaultItem.getWorkTime() == 0);
+    CHECK(defaultItem.getIdleTime() == 0);
 
     // Parameterized constructor
     Item<int> item1(1, 10, 5, 2);
-    CHECK(item1.get_id() == 1);
-    CHECK(item1.get_occur_time() == 10);
-    CHECK(item1.get_work_time() == 5);
-    CHECK(item1.get_idle_time() == 2);
+    CHECK(item1.getId() == 1);
+    CHECK(item1.getOccurTime() == 10);
+    CHECK(item1.getWorkTime() == 5);
+    CHECK(item1.getIdleTime() == 2);
 
     // Comparison operators
     Item<int> item2(2, 15, 3, 7);

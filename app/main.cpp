@@ -19,9 +19,12 @@ int main(int argc, char *argv[]) {
   Problem<Item<int>> problem;
   problem.loadFromFile(argv[1]);
 
-  problem.permutationSort();
-  problem.occurTimeSort();
-  problem.idleTimeSort();
+  //problem.permutationSort();
+  //problem.occurTimeSort();
+  //problem.idleTimeSort();
+  problem.schrageAlgorithmV1();
+  problem.schrageAlgorithmV2();
+  problem.schrageAlgorithmWithExpropriation();
 
   return 0;
 }

@@ -5,8 +5,9 @@
 #include <string>
 #include <sstream>
 #include <algorithm>
+#include <queue>
 
-#include "item.h"
+#include "queue_item.h"
 
 /**
  * @brief A class representing a problem with a list of items.
@@ -33,14 +34,14 @@ public:
      * @brief Get the size of the list.
      * @return The size of the list.
      */
-    size_t get_size();
+    size_t getSize();
 
     /**
      * @brief Get an item from the list by index.
      * @param index The index of the item to retrieve.
      * @return A reference to the item at the specified index.
      */
-    Item &get_item(size_t index);
+    Item &getItem(size_t index);
 
     /**
      * @brief Load items from a file into the list.
@@ -52,7 +53,7 @@ public:
      * @brief Calculate the total work time for the list of items.
      * @return The total work time.
      */
-    int workTime();
+    int workTime(const bool count_idle_time);
 
     /**
      * @brief Create a new file or clear an existing one.
@@ -67,6 +68,8 @@ public:
      * @param result_file The name of the file to save results to.
      */
     void savePermResult(const std::vector<Item> best_order, const int best_time, std::string result_file);
+
+    void displayResult(const std::vector<Item> order, const int time);
 
     /**
      * @brief Perform a permutation sort on the list of items.
@@ -83,8 +86,15 @@ public:
      * 
      */
     void idleTimeSort();
-};
 
+    void eraseChosenElement(std::vector<Item>& list, const int serial);
+
+    void schrageAlgorithmV1();
+
+    void schrageAlgorithmV2();
+
+    void schrageAlgorithmWithExpropriation();
+};
 
 #ifdef ENABLE_DOCTEST_IN_LIBRARY
 
@@ -106,11 +116,11 @@ TEST_CASE("Problem class tests") {
         Item<int> first_item = Item<int>(1, 1, 5, 9);
         CHECK_NOTHROW(problem.loadFromFile("../data/test_data.txt"));
         // Check if the size is as expected
-        CHECK(problem.get_size() == 6);
-        CHECK(problem.get_item(0).get_id() == first_item.get_id());
-        CHECK(problem.get_item(0).get_work_time() == first_item.get_work_time());
-        CHECK(problem.get_item(0).get_idle_time() == first_item.get_idle_time());
-        CHECK(problem.get_item(0).get_occur_time() == first_item.get_occur_time());
+        CHECK(problem.getSize() == 6);
+        CHECK(problem.getItem(0).getId() == first_item.getId());
+        CHECK(problem.getItem(0).getWorkTime() == first_item.getWorkTime());
+        CHECK(problem.getItem(0).getIdleTime() == first_item.getIdleTime());
+        CHECK(problem.getItem(0).getOccurTime() == first_item.getOccurTime());
     }
 
     SUBCASE("File creation or clearing") {
@@ -162,7 +172,7 @@ TEST_CASE("Problem class tests") {
     SUBCASE("Checking calculations") {
         Problem<Item<int>> problem;
         CHECK_NOTHROW(problem.loadFromFile("../data/test_data.txt"));
-        CHECK(problem.workTime() == workTime_forTestSet);
+        CHECK(problem.workTime(true) == workTime_forTestSet);
     };
 }
 
@@ -174,12 +184,12 @@ TEST_CASE("permutationSort") {
 
     SUBCASE("Optimal order should be {?}") {
         problem.permutationSort();
-        CHECK(problem.workTime() == 32);
+        CHECK(problem.workTime(true) == 32);
 
         std::vector<int> result_order;
         std::vector<int> expected_order = {1, 2, 3, 4, 5, 6};
-        for (int i = 0; i < int(problem.get_size()); i++) {
-            result_order.push_back(problem.get_item(i).get_id());
+        for (int i = 0; i < int(problem.getSize()); i++) {
+            result_order.push_back(problem.getItem(i).getId());
         }
         CHECK(result_order == expected_order);
     }
@@ -191,12 +201,12 @@ TEST_CASE("occurTimeSort") {
 
     SUBCASE("Optimal order should be {?}") {
         problem.occurTimeSort();
-        CHECK(problem.workTime() == 62);
+        CHECK(problem.workTime(true) == 62);
 
         std::vector<int> result_order;
         std::vector<int> expected_order = {1, 2, 3, 4, 5, 6};
-        for (int i = 0; i < int(problem.get_size()); i++) {
-            result_order.push_back(problem.get_item(i).get_id());
+        for (int i = 0; i < int(problem.getSize()); i++) {
+            result_order.push_back(problem.getItem(i).getId());
         }
         CHECK(result_order == expected_order);
     }
@@ -208,12 +218,12 @@ TEST_CASE("idleTimeSort") {
 
     SUBCASE("Optimal order should be {?}") {
         problem.idleTimeSort();
-        CHECK(problem.workTime() == 62);
+        CHECK(problem.workTime(true) == 62);
 
         std::vector<int> result_order;
         std::vector<int> expected_order = {1, 2, 3, 4, 5, 6};
-        for (int i = 0; i < int(problem.get_size()); i++) {
-            result_order.push_back(problem.get_item(i).get_id());
+        for (int i = 0; i < int(problem.getSize()); i++) {
+            result_order.push_back(problem.getItem(i).getId());
         }
         CHECK(result_order == expected_order);
     }
