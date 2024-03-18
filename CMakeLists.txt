@@ -45,7 +45,7 @@ set(SOURCES          # All .cpp files in src/
         src/example.cpp
         src/item.cpp
         src/problem.cpp
-        src/queue_item.cpp
+#        src/queue_item.cpp
 )
 set(TESTFILES        # All .cpp files in tests/
         tests/main.cpp

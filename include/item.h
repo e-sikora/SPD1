@@ -65,7 +65,7 @@ public:
    *
    * @return int The idle time associated with the item.
    */
-    void workTimeDecrement() { work_time -= 1; }
+    void workTimeDecrement() { work_time--; }
 
     /**
    * @brief Getter method for the idle time associated with the item.

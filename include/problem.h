@@ -6,9 +6,9 @@
 #include <sstream>
 #include <algorithm>
 #include <queue>
+#include <functional>
 
-#include "queue_item.h"
-
+#include "item.h"
 /**
  * @brief A class representing a problem with a list of items.
  *
