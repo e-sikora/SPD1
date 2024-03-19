@@ -138,6 +138,26 @@ TEST_CASE("Item class") {
     CHECK(item1 < item2);
     CHECK(item1.compareByOccurTime(item2));
     CHECK(item1.compareByIdleTime(item2));
+
+    SUBCASE("setWorkTime") {
+        Item<int> item;
+        item.setWorkTime(10);
+        CHECK(item.getWorkTime() == 10);  // Verifying that work time is set correctly
+    }
+
+    // Testing workTimeDecrement
+    SUBCASE("workTimeDecrement") {
+        Item<int> item(1, 10, 5, 2); // Initializing item with work time of 5
+        item.workTimeDecrement();
+        CHECK(item.getWorkTime() == 4);  // Verifying that work time is decremented by 1
+    }
+
+    // Testing setIdleTime
+    SUBCASE("setIdleTime") {
+        Item<int> item;
+        item.setIdleTime(20);
+        CHECK(item.getIdleTime() == 20);  // Verifying that idle time is set correctly
+    }
 }
 
 #endif

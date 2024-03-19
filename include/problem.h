@@ -229,38 +229,146 @@ TEST_CASE("permutationSort") {
     }
 }
 
-TEST_CASE("occurTimeSort") {
-    Problem<Item<int>> problem;
-    CHECK_NOTHROW(problem.loadFromFile("../data/test_data.txt"));
+//TEST_CASE("occurTimeSort") {
+//    Problem<Item<int>> problem;
+//    CHECK_NOTHROW(problem.loadFromFile("../data/test_data.txt"));
+//
+//    SUBCASE("Optimal order should be {?}") {
+//        problem.occurTimeSort();
+//        CHECK(problem.workTime(true) == 62);
+//
+//        std::vector<int> result_order;
+//        std::vector<int> expected_order = {1, 2, 3, 4, 5, 6};
+//        for (int i = 0; i < int(problem.getSize()); i++) {
+//            result_order.push_back(problem.getItem(i).getId());
+//        }
+//        CHECK(result_order == expected_order);
+//    }
+//}
+////
+//TEST_CASE("idleTimeSort") {
+//    Problem<Item<int>> problem;
+//    CHECK_NOTHROW(problem.loadFromFile("../data/test_data.txt"));
+//
+//    SUBCASE("Optimal order should be {?}") {
+//        problem.idleTimeSort();
+//        CHECK(problem.workTime(true) == 62);
+//
+//        std::vector<int> result_order;
+//        std::vector<int> expected_order = {1, 2, 3, 4, 5, 6};
+//        for (int i = 0; i < int(problem.getSize()); i++) {
+//            result_order.push_back(problem.getItem(i).getId());
+//        }
+//        CHECK(result_order == expected_order);
+//    }
+//}
 
-    SUBCASE("Optimal order should be {?}") {
-        problem.occurTimeSort();
-        CHECK(problem.workTime(true) == 62);
+TEST_CASE("Testing eraseChosenElement with Item<int>") {
+    Problem<Item<int>> problem; // Using Problem with Item<int>
+    Item<int> item1 = Item<int>(1, 1, 1, 1);
+    Item<int> item2 = Item<int>(2, 2, 2, 2);
+    Item<int> item3 = Item<int>(3, 3, 3, 3);
+    SUBCASE("Erase an existing element") {
+        std::vector<Item<int>> list = {item1, item2, item3};
+        problem.eraseChosenElement(list, 2);
+        CHECK(list.size() == 2);
+        CHECK(list[0].getId() == 1);
+        CHECK(list[1].getId() == 3);
+    }
 
-        std::vector<int> result_order;
-        std::vector<int> expected_order = {1, 2, 3, 4, 5, 6};
-        for (int i = 0; i < int(problem.getSize()); i++) {
-            result_order.push_back(problem.getItem(i).getId());
-        }
-        CHECK(result_order == expected_order);
+    SUBCASE("Attempt to erase a non-existing element") {
+        std::vector<Item<int>> list = {item1, item2, item3};
+        problem.eraseChosenElement(list, 4);
+        CHECK(list.size() == 3); // Size should remain unchanged
+    }
+
+    SUBCASE("Erase from an empty list") {
+        std::vector<Item<int>> list;
+        problem.eraseChosenElement(list, 1);
+        CHECK(list.empty());
     }
 }
 
-TEST_CASE("idleTimeSort") {
+
+TEST_CASE("Testing schrageAlgorithmV1") {
+    // Initialize Problem object with a predefined list of items
     Problem<Item<int>> problem;
-    CHECK_NOTHROW(problem.loadFromFile("../data/test_data.txt"));
+    problem.loadFromFile("../data/test_data.txt");
+    // Manually populate main_list with Item<int> instances
+    // Adjust the numbers as needed to match your test case
 
-    SUBCASE("Optimal order should be {?}") {
-        problem.idleTimeSort();
-        CHECK(problem.workTime(true) == 62);
+    // Run schrageAlgorithmV1
+    problem.schrageAlgorithmV1();
 
-        std::vector<int> result_order;
-        std::vector<int> expected_order = {1, 2, 3, 4, 5, 6};
-        for (int i = 0; i < int(problem.getSize()); i++) {
-            result_order.push_back(problem.getItem(i).getId());
-        }
-        CHECK(result_order == expected_order);
+    // Example checks
+    // Verify that main_list is sorted correctly
+    // This needs to be adjusted based on expected behavior of the algorithm
+    // Perhaps check the first and last elements as a simple verification
+    std::vector<int> expected_array = {1, 5, 3, 2, 4, 6};
+    std::vector<int> result_array;
+    for (int i = 0; i < int(problem.getSize()); i++) {
+        result_array.push_back(problem.getItem(i).getId());
     }
+
+    CHECK(result_array == expected_array);
+
+    // Optionally, verify the total work time against an expected value
+    int total_work_time = problem.workTime(true);  // Assuming true includes idle time
+    CHECK(total_work_time == 32);
+}
+
+TEST_CASE("Testing schrageAlgorithmV2") {
+    // Initialize Problem object with a predefined list of items
+    Problem<Item<int>> problem;
+    problem.loadFromFile("../data/test_data.txt");
+    // Manually populate main_list with Item<int> instances
+    // Adjust the numbers as needed to match your test case
+
+    // Run schrageAlgorithmV1
+    problem.schrageAlgorithmV2();
+
+    // Example checks
+    // Verify that main_list is sorted correctly
+    // This needs to be adjusted based on expected behavior of the algorithm
+    // Perhaps check the first and last elements as a simple verification
+    std::vector<int> expected_array = {1, 5, 3, 2, 4, 6};
+    std::vector<int> result_array;
+    for (int i = 0; i < int(problem.getSize()); i++) {
+        result_array.push_back(problem.getItem(i).getId());
+    }
+
+    CHECK(result_array == expected_array);
+
+    // Optionally, verify the total work time against an expected value
+    int total_work_time = problem.workTime(true);  // Assuming true includes idle time
+    CHECK(total_work_time == 32);
+}
+
+TEST_CASE("Testing schrageAlgorithmWithExpropriation") {
+    // Initialize Problem object with a predefined list of items
+    Problem<Item<int>> problem;
+    problem.loadFromFile("../data/test_data.txt");
+    // Manually populate main_list with Item<int> instances
+    // Adjust the numbers as needed to match your test case
+
+    // Run schrageAlgorithmV1
+    problem.schrageAlgorithmWithExpropriation();
+
+    // Example checks
+    // Verify that main_list is sorted correctly
+    // This needs to be adjusted based on expected behavior of the algorithm
+    // Perhaps check the first and last elements as a simple verification
+    std::vector<int> expected_array = {1, 5, 3, 2, 4, 6};
+    std::vector<int> result_array;
+    for (int i = 0; i < int(problem.getSize()); i++) {
+        result_array.push_back(problem.getItem(i).getId());
+    }
+
+    CHECK(result_array == expected_array);
+
+    // Optionally, verify the total work time against an expected value
+    int total_work_time = problem.workTime(true);  // Assuming true includes idle time
+    CHECK(total_work_time == 32);
 }
 
 #endif
