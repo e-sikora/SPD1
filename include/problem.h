@@ -9,6 +9,7 @@
 #include <functional>
 
 #include "item.h"
+
 /**
  * @brief A class representing a problem with a list of items.
  *
@@ -69,6 +70,14 @@ public:
      */
     void savePermResult(const std::vector<Item> best_order, const int best_time, std::string result_file);
 
+    /**
+     * @brief Displays the result of the problem.
+     *
+     * This method prints out the final order of items and the total time taken to process these items.
+     *
+     * @param order The final order of items after sorting.
+     * @param time The total time taken to process the items.
+     */
     void displayResult(const std::vector<Item> order, const int time);
 
     /**
@@ -82,17 +91,42 @@ public:
     void occurTimeSort();
 
     /**
-     * @brief 
-     * 
+     * @brief Sorts the list of items based on their idle time.
+     *
+     * This method organizes items in the list in ascending order of their idle times.
+     * The sort is performed in-place.
      */
     void idleTimeSort();
 
-    void eraseChosenElement(std::vector<Item>& list, const int serial);
+    /**
+     * @brief Removes a specific item from a list based on its serial number.
+     *
+     * This method erases an item from the provided list that matches the given serial number.
+     *
+     * @param list The list from which the item should be erased.
+     * @param serial The serial number of the item to be removed.
+     */
+    void eraseChosenElement(std::vector<Item> &list, const int serial);
 
+    /**
+     * @brief Executes the first version of the Schrage algorithm.
+     *
+     * This method sorts the items in the list according to the Schrage algorithm without expropriation.
+     */
     void schrageAlgorithmV1();
 
+    /**
+     * @brief Executes the second version of the Schrage algorithm.
+     *
+     * This method sorts the items in the list according to the Schrage algorithm and includes improvements over version 1.
+     */
     void schrageAlgorithmV2();
 
+    /**
+     * @brief Executes the Schrage algorithm with expropriation.
+     *
+     * This method sorts the items in the list using the Schrage algorithm with expropriation to potentially reduce total work time.
+     */
     void schrageAlgorithmWithExpropriation();
 };
 
@@ -103,7 +137,7 @@ public:
 
 
 TEST_CASE("Problem class tests") {
-    int workTime_forTestSet = 62;
+    int workTime_forTestSet = 32;
     // Test loading from file
     SUBCASE("Load from file") {
         Problem<Item<int>> problem;
@@ -136,14 +170,14 @@ TEST_CASE("Problem class tests") {
     }
 
     SUBCASE("Checking if the result is saved correctly") {
-        #include <cstdio>
+#include <cstdio>
         // Create a sample vector and file name
         Item<int> problem1 = Item<int>(1, 1, 1, 1);
         Item<int> problem2 = Item<int>(2, 2, 2, 2);
         Item<int> problem3 = Item<int>(3, 3, 3, 3);
         std::vector<Item<int>> best_order = {problem1, problem2, problem3};
         int best_time = 10;
-        const char* result_file = "../data/test_result.txt";
+        const char *result_file = "../data/test_result.txt";
 
         // Call the function
         Problem<Item<int>> problem;
