@@ -79,7 +79,7 @@ public:
    *
    * @return int The idle time associated with the item.
    */
-    void setIdleTime(int idle_time_s) { idle_time = idle_time_s; } 
+    void setIdleTime(int idle_time_s) { idle_time = idle_time_s; }
 
     /**
     * @brief Overloaded less than operator for comparing items based on their IDs.
@@ -108,15 +108,28 @@ public:
      */
     bool compareByIdleTime(const Item &other) const;
 
+    /**
+    * @brief Compares two items based on their work times and occurrence times.
+     *
+     * @param other The other item to compare with.
+     * @return true If this item's work time is less than the other item's, or if their work times are equal and this item's occurrence time is less.
+     * @return false Otherwise.
+     */
     bool compareByWorkAndOccurTime(const Item &other) const;
 };
 
-
-template <class T>
-bool Item<T>::compareByWorkAndOccurTime(const Item& other) const {
+/**
+ * @brief Compares two items based on their work times and occurrence times.
+ *
+ * @tparam T The type of the item (currently unused).
+ * @param other The other item to compare with.
+ * @return true If this item's work time is less than the other item's, or if their work times are equal and this item's occurrence time is less.
+ * @return false Otherwise.
+ */
+template<class T>
+bool Item<T>::compareByWorkAndOccurTime(const Item &other) const {
     return (work_time + occur_time) < (other.work_time + other.occur_time);
 }
-
 
 
 #ifdef ENABLE_DOCTEST_IN_LIBRARY

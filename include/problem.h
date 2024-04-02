@@ -71,6 +71,11 @@ public:
      */
     void savePermResult(const std::vector<Item> best_order, const int best_time, std::string result_file);
 
+    /**
+     * @brief Display the result.
+     * @param order The order of items.
+     * @param time The total time.
+     */
     void displayResult(const std::vector<Item> order, const int time);
 
     /**
@@ -89,16 +94,37 @@ public:
      */
     void idleTimeSort();
 
-    void eraseChosenVectorElement(std::vector<Item>& list, const int serial);
+    /**
+     * @brief Erase chosen vector element.
+     * @param list The vector.
+     * @param serial The serial to erase.
+     */
+    void eraseChosenVectorElement(std::vector<Item> &list, const int serial);
 
+    /**
+    * @brief Perform Schrage Algorithm version 1.
+    */
     void schrageAlgorithmV1();
 
+    /**
+     * @brief Perform Schrage Algorithm version 2.
+     */
     void schrageAlgorithmV2();
 
+    /**
+     * @brief Perform Schrage Algorithm with expropriation.
+     */
     void schrageAlgorithmWithExpropriation();
 
+    /**
+     * @brief Perform Bisora Algorithm.
+     */
     void bisoraAlgorithm();
 
+    /**
+     * @brief Measure time for a given function.
+     * @param callback The function to measure time for.
+     */
     void timeMeasure(std::function<void()> callback);
 };
 
@@ -142,14 +168,14 @@ TEST_CASE("Problem class tests") {
     }
 
     SUBCASE("Checking if the result is saved correctly") {
-        #include <cstdio>
+#include <cstdio>
         // Create a sample vector and file name
         Item<int> problem1 = Item<int>(1, 1, 1, 1);
         Item<int> problem2 = Item<int>(2, 2, 2, 2);
         Item<int> problem3 = Item<int>(3, 3, 3, 3);
         std::vector<Item<int>> best_order = {problem1, problem2, problem3};
         int best_time = 10;
-        const char* result_file = "../data/test_result.txt";
+        const char *result_file = "../data/test_result.txt";
 
         // Call the function
         Problem<Item<int>> problem;
