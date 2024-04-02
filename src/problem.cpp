@@ -122,7 +122,7 @@ void Problem<Item>::displayResult(std::vector<Item> order, int time){
 template<class Item>
 void Problem<Item>::permutationSort() {
     std::string file_destination = ("data/perm_result.txt"); // commented due to unittesting
-    //std::vector<Item> original = main_list;
+    //std::vector<Item> orginal = main_list;
     int perm_work_time = 0;
     int best_time;
     std::vector<Item> best_order;
@@ -148,36 +148,36 @@ void Problem<Item>::permutationSort() {
     std::cout << "-------------------------Przegląd zupełny-------------------------" << std::endl;
     displayResult(best_order, best_time);
 
-    //main_list = original;
+    //main_list = orginal;
 }
 
 template<class Item>
 void Problem<Item>::occurTimeSort() {
-    //std::vector<Item> original = main_list;
+    //std::vector<Item> orginal = main_list;
     std::sort(main_list.begin(), main_list.end(), [](const Item &a, const Item &b) { return a.compareByOccurTime(b); });
 
     int best_time = this->workTime(true);
     std::cout << "------------Algorytm heurystyczny - r (termin dostępności)--------" << std::endl;
     displayResult(main_list, best_time);
 
-    //main_list = original;
+    //main_list = orginal;
 }
 
 template<class Item>
 void Problem<Item>::idleTimeSort() {
-    //std::vector<Item> original = main_list;
+    //std::vector<Item> orginal = main_list;
     std::sort(main_list.begin(), main_list.end(), [](const Item &a, const Item &b) { return a.compareByIdleTime(b); });
 
     int best_time = this->workTime(true);
     std::cout << "------------Algorytm heurystyczny - q (czas stygnięcia)-----------" << std::endl;
     displayResult(main_list, best_time);
 
-    //main_list = original;
+    //main_list = orginal;
 }
 
 
 template<class Item>
-void Problem<Item>::eraseChosenElement(std::vector<Item>& list, int serial){
+void Problem<Item>::eraseChosenVectorElement(std::vector<Item>& list, int serial){
     auto it = list.begin();
     while (it != list.end()) {
         if (it->getId() == serial) {
@@ -191,16 +191,16 @@ void Problem<Item>::eraseChosenElement(std::vector<Item>& list, int serial){
 
 template<class Item>
 void Problem<Item>::schrageAlgorithmV1() {
-    std::vector<Item> helper, original = main_list;
-    std::sort(original.begin(), original.end(), [](const Item &a, const Item &b) { return a.compareByOccurTime(b); });
+    std::vector<Item> helper, orginal = main_list;
+    std::sort(orginal.begin(), orginal.end(), [](const Item &a, const Item &b) { return a.compareByOccurTime(b); });
     main_list.clear();
-    main_list.push_back(original.front());
+    main_list.push_back(orginal.front());
     list_size = 1;
-    original.erase(original.begin());
+    orginal.erase(orginal.begin());
     int current_work_time = this->workTime(false);
 
-    while(!original.empty()){
-        for(const auto& item : original) {
+    while(!orginal.empty()){
+        for(const auto& item : orginal) {
             if(item.getOccurTime() < current_work_time) {
                 helper.push_back(item);
             }
@@ -210,11 +210,11 @@ void Problem<Item>::schrageAlgorithmV1() {
             std::sort(helper.begin(), helper.end(), [](const Item &a, const Item &b) { return a.compareByIdleTime(b); });
             main_list.push_back(helper.back());
             int num_to_erase = helper.back().getId();
-            eraseChosenElement(original, num_to_erase);
+            eraseChosenVectorElement(orginal, num_to_erase);
         }
         else{
-            main_list.push_back(original.front());
-            original.erase(original.begin());
+            main_list.push_back(orginal.front());
+            orginal.erase(orginal.begin());
         }
 
         helper.clear();
@@ -230,6 +230,7 @@ void Problem<Item>::schrageAlgorithmV1() {
 template<class Item>
 void Problem<Item>::schrageAlgorithmV2() {
     std::vector<Item> ogrinal = main_list;
+    int orginal_size = list_size;
 
     std::priority_queue<Item, std::vector<Item>, std::function<bool(const Item&, const Item&)>> idleQueue(
         [](const Item &a, const Item &b) { return a.compareByIdleTime(b); });
@@ -257,7 +258,7 @@ void Problem<Item>::schrageAlgorithmV2() {
             occurQueue.pop(); 
         }
 
-        current_time++; //nie wiem czy to tu ma być
+        current_time++;
         
         if (idleQueue.empty()) {
             current_time = occurQueue.top().getOccurTime();
@@ -284,9 +285,16 @@ void Problem<Item>::schrageAlgorithmV2() {
                     helpQueue.pop();
                 }
 
-                current_item = idleQueue.top(); 
-                current_item_backup = idleQueue.top();
-                current_item.workTimeDecrement();
+                if(!idleQueue.empty()){
+                    current_item = idleQueue.top(); 
+                    current_item_backup = idleQueue.top();
+                    current_item.workTimeDecrement();
+                }
+                else{
+                    current_item = occurQueue.top();
+                    current_item_backup = occurQueue.top();
+                }
+
             }
         }
     }
@@ -295,6 +303,7 @@ void Problem<Item>::schrageAlgorithmV2() {
     std::cout << "----------------Algorytm Schrage - bez wywłaczszeń----------------" << std::endl;
     displayResult(main_list, total_work_time);
     main_list = ogrinal;
+    list_size = orginal_size;
 }
 
 template<class Item>
@@ -334,7 +343,7 @@ void Problem<Item>::schrageAlgorithmWithExpropriation() {
         if (!idleQueue.empty()){
             current_item_id = idleQueue.top().getId();
         }
-        current_time++; //nie wiem czy to tu ma być
+        current_time++;
         
         if (idleQueue.empty()) {
             current_time = occurQueue.top().getOccurTime();
@@ -364,6 +373,7 @@ void Problem<Item>::schrageAlgorithmWithExpropriation() {
                 current_item.setWorkTime(current_item_backup.getWorkTime() - current_item.getWorkTime());
                 main_list.push_back(current_item);
                 list_size++;
+                
                 current_item = idleQueue.top(); 
                 current_item_backup = idleQueue.top();
                 current_item.workTimeDecrement();
@@ -380,9 +390,16 @@ void Problem<Item>::schrageAlgorithmWithExpropriation() {
                     main_list.push_back(current_item);
                     list_size++;
                     idleQueue.pop();
+                    
+                if(!idleQueue.empty()){
                     current_item = idleQueue.top(); 
                     current_item_backup = idleQueue.top();
                     current_item.workTimeDecrement();
+                }
+                else{
+                    current_item = occurQueue.top();
+                    current_item_backup = occurQueue.top();
+                }
                 }
             }
         }
@@ -390,6 +407,76 @@ void Problem<Item>::schrageAlgorithmWithExpropriation() {
 
     int total_work_time = this->workTime(true);
     std::cout << "----------------Algorytm Schrage - z wywłaczszeniami--------------" << std::endl;
+    displayResult(main_list, total_work_time);
+
+    list_size = orginal_size;
+    main_list = ogrinal;
+}
+
+template<class Item>
+void Problem<Item>::bisoraAlgorithm() {
+    std::vector<Item> ogrinal = main_list;
+    int current_item_occur_time;
+    int orginal_size = list_size;
+    Item temporary, top_item;
+
+    std::priority_queue<Item, std::vector<Item>, std::function<bool(const Item&, const Item&)>> idleQueue(
+        [](const Item &a, const Item &b) { return a.compareByIdleTime(b); });
+
+    std::priority_queue<Item, std::vector<Item>, std::function<bool(const Item&, const Item&)>> helpQueue(
+        [](const Item &a, const Item &b) { return a.compareByIdleTime(b); });
+
+    std::priority_queue<Item, std::vector<Item>, std::function<bool(const Item&, const Item&)>> workQueue(
+        [](const Item &a, const Item &b) { return a.compareByWorkAndOccurTime(b); });
+
+    for (const auto &item : main_list){
+        idleQueue.push(item);
+    }
+
+    main_list.clear();
+    list_size = 0;
+
+    while(list_size < orginal_size){
+
+        current_item_occur_time = idleQueue.top().getOccurTime();
+        temporary = idleQueue.top();
+        idleQueue.pop();
+
+        int item_total_time;
+
+        while(!idleQueue.empty()){
+            top_item = idleQueue.top();
+            item_total_time = top_item.getOccurTime() + top_item.getWorkTime();
+            if(current_item_occur_time < item_total_time)  
+                helpQueue.push(top_item);
+            else
+                workQueue.push(top_item);    
+            idleQueue.pop();
+        }
+
+        if(!workQueue.empty()){
+            top_item = workQueue.top();
+            workQueue.pop();
+            main_list.push_back(top_item);
+        }
+
+        main_list.push_back(temporary);
+
+        while(!workQueue.empty()){
+            idleQueue.push(workQueue.top());
+            workQueue.pop();
+        }
+
+        while(!helpQueue.empty()){
+            idleQueue.push(helpQueue.top());
+            helpQueue.pop();
+        }
+
+        list_size = main_list.size();
+    }
+
+    int total_work_time = this->workTime(true);
+    std::cout << "-------------------------Algorytm Bisora--------------------------" << std::endl;
     displayResult(main_list, total_work_time);
 
     list_size = orginal_size;

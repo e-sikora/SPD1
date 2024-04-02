@@ -6,9 +6,9 @@
 #include <sstream>
 #include <algorithm>
 #include <queue>
-#include <functional>
 
 #include "item.h"
+
 /**
  * @brief A class representing a problem with a list of items.
  *
@@ -87,13 +87,15 @@ public:
      */
     void idleTimeSort();
 
-    void eraseChosenElement(std::vector<Item>& list, const int serial);
+    void eraseChosenVectorElement(std::vector<Item>& list, const int serial);
 
     void schrageAlgorithmV1();
 
     void schrageAlgorithmV2();
 
     void schrageAlgorithmWithExpropriation();
+
+    void bisoraAlgorithm();
 };
 
 #ifdef ENABLE_DOCTEST_IN_LIBRARY

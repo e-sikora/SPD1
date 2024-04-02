@@ -20,11 +20,12 @@ int main(int argc, char *argv[]) {
   problem.loadFromFile(argv[1]);
 
   //problem.permutationSort();
-  //problem.occurTimeSort();
-  //problem.idleTimeSort();
+  problem.occurTimeSort();
+  problem.idleTimeSort();
   problem.schrageAlgorithmV1();
   problem.schrageAlgorithmV2();
   problem.schrageAlgorithmWithExpropriation();
+  problem.bisoraAlgorithm();
 
   return 0;
 }

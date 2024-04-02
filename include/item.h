@@ -65,7 +65,7 @@ public:
    *
    * @return int The idle time associated with the item.
    */
-    void workTimeDecrement() { work_time--; }
+    void workTimeDecrement() { work_time -= 1; }
 
     /**
    * @brief Getter method for the idle time associated with the item.
@@ -107,7 +107,16 @@ public:
      * @return false Otherwise.
      */
     bool compareByIdleTime(const Item &other) const;
+
+    bool compareByWorkAndOccurTime(const Item &other) const;
 };
+
+
+template <class T>
+bool Item<T>::compareByWorkAndOccurTime(const Item& other) const {
+    return (work_time + occur_time) < (other.work_time + other.occur_time);
+}
+
 
 
 #ifdef ENABLE_DOCTEST_IN_LIBRARY
