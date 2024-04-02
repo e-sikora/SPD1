@@ -6,6 +6,8 @@
 #include <sstream>
 #include <algorithm>
 #include <queue>
+#include <chrono>
+#include <functional>
 
 #include "item.h"
 
@@ -96,6 +98,8 @@ public:
     void schrageAlgorithmWithExpropriation();
 
     void bisoraAlgorithm();
+
+    void timeMeasure(std::function<void()> callback);
 };
 
 #ifdef ENABLE_DOCTEST_IN_LIBRARY

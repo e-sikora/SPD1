@@ -116,7 +116,7 @@ void Problem<Item>::displayResult(std::vector<Item> order, int time){
         std::cout << item.getId() << " ";
     }
     std::cout << std::endl << "Czas potrzebny na wykonanie zadania w powyższej kolejności to: " << time
-              << std::endl << std::endl;
+              << std::endl;
 }
 
 template<class Item>
@@ -482,5 +482,19 @@ void Problem<Item>::bisoraAlgorithm() {
     list_size = orginal_size;
     main_list = ogrinal;
 }
+
+template<class Item>
+void Problem<Item>::timeMeasure(std::function<void()> callback) {
+    auto start = std::chrono::high_resolution_clock::now();
+
+    callback();
+
+    auto stop = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+
+    std::cout << "Powyższy algorytm wykonywał się: " << duration.count() << "ms" 
+              << std::endl << std::endl;
+}
+
 
 template class Problem<Item<int>>;
