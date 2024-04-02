@@ -63,11 +63,13 @@ public:
     void setWorkTime(int work_time_s) { work_time = work_time_s; }
 
     /**
+
      * @brief Decrements the work time of the item by one.
      *
      * This method is used to decrement the current work time of the item, typically indicating a unit of work has been completed.
      */
     void workTimeDecrement() { work_time--; }
+
 
     /**
    * @brief Getter method for the idle time associated with the item.
@@ -111,7 +113,16 @@ public:
      * @return false Otherwise.
      */
     bool compareByIdleTime(const Item &other) const;
+
+    bool compareByWorkAndOccurTime(const Item &other) const;
 };
+
+
+template <class T>
+bool Item<T>::compareByWorkAndOccurTime(const Item& other) const {
+    return (work_time + occur_time) < (other.work_time + other.occur_time);
+}
+
 
 
 #ifdef ENABLE_DOCTEST_IN_LIBRARY

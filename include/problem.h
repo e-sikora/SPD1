@@ -6,7 +6,6 @@
 #include <sstream>
 #include <algorithm>
 #include <queue>
-#include <functional>
 
 #include "item.h"
 
@@ -108,6 +107,7 @@ public:
      */
     void eraseChosenElement(std::vector<Item> &list, const int serial);
 
+
     /**
      * @brief Executes the first version of the Schrage algorithm.
      *
@@ -128,6 +128,8 @@ public:
      * This method sorts the items in the list using the Schrage algorithm with expropriation to potentially reduce total work time.
      */
     void schrageAlgorithmWithExpropriation();
+
+    void bisoraAlgorithm();
 };
 
 #ifdef ENABLE_DOCTEST_IN_LIBRARY
