@@ -38,9 +38,8 @@ Before you begin, ensure you have met the following requirements:
 
 2. Run the Python script with the path to your data file as an argument:
    ```bash
-   python3 build_run.py ./data/test_1.txt
+   python3 run.py ./data/test_1.txt
    ```
-   Replace `build_run.py` with the name of the Python script and adjust the data file path as needed.
 
 ## Manual Build and Run Instructions
 
@@ -72,6 +71,31 @@ Before you begin, ensure you have met the following requirements:
 
 5. **Run the executable with the data file:**
    ```bash
-   .<executable_name> ../data/test_1.txt
+   ./main ../data/test_1.txt
    ```
    Replace `main` with the name of your project's executable and adjust the path to your data file as necessary.
+## Generating Documentation
+
+This project's documentation is generated using Doxygen. Follow the steps below to generate and view the documentation:
+
+### Prerequisites
+
+Before generating the documentation, ensure you have the following prerequisites installed on your system:
+
+- **Doxygen**: You can install Doxygen from the [official Doxygen website](https://www.doxygen.nl/download.html).
+
+### Generating Documentation
+
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd <repository-name>
+   ```
+
+2. Run the Python script with the path to your data file as an argument:
+   ```bash
+   python3 run_doc.py
+   ```
+   
+After generation, the documentation will be opened in default browser.
+
