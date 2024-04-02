@@ -87,35 +87,35 @@ public:
         prev_fork = prev;
     }
 };
-
-template<typename T>
-class CarlierAlgorithm {
-private:
-    int a = 0;
-    int b = 0;
-    int c = -1;
-    Problem<Item<int>> problem;
-    int U = 0;
-    int LB = 0;
-    int UB = std::numeric_limits<int>::max();
-public:
-    int Carlier(){
-
-        if(U<UB) UB=U;
-        // przypisanie zadań poszeregowanych przez Schrage
-
-        // znalezeinei a,b i c
-        // sprawdzenie czy C istnieje
-        // slice z problem, wyodrębnienie zbioru K
-        // wyliczenie r, q ,p od K
-        // pierwszy branch -- podmiana r
-        // schrage*
-        // aktualizacja LB
-
-        // drugi branch
-
-    }
-
-
-
-};
+//
+//template<typename T>
+//class CarlierAlgorithm {
+//private:
+//    int a = 0;
+//    int b = 0;
+//    int c = -1;
+//    Problem<Item<int>> problem;
+//    int U = 0;
+//    int LB = 0;
+//    int UB = std::numeric_limits<int>::max();
+//public:
+//    int Carlier(){
+//
+//        if(U<UB) UB=U;
+//        // przypisanie zadań poszeregowanych przez Schrage
+//
+//        // znalezeinei a,b i c
+//        // sprawdzenie czy C istnieje
+//        // slice z problem, wyodrębnienie zbioru K
+//        // wyliczenie r, q ,p od K
+//        // pierwszy branch -- podmiana r
+//        // schrage*
+//        // aktualizacja LB
+//
+//        // drugi branch
+//        retrun 0;
+//    }
+//
+//
+//
+//};
