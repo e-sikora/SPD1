@@ -54,18 +54,22 @@ public:
     int getWorkTime() const { return work_time; }
 
     /**
-   * @brief Getter method for the idle time associated with the item.
-   *
-   * @return int The idle time associated with the item.
-   */
+     * @brief Sets the work time required for the item.
+     *
+     * This method assigns the specified work time to the item.
+     *
+     * @param work_time_s The new work time to set for the item.
+     */
     void setWorkTime(int work_time_s) { work_time = work_time_s; }
 
     /**
-   * @brief Getter method for the idle time associated with the item.
-   *
-   * @return int The idle time associated with the item.
-   */
-    void workTimeDecrement() { work_time -= 1; }
+
+     * @brief Decrements the work time of the item by one.
+     *
+     * This method is used to decrement the current work time of the item, typically indicating a unit of work has been completed.
+     */
+    void workTimeDecrement() { work_time--; }
+
 
     /**
    * @brief Getter method for the idle time associated with the item.
@@ -75,11 +79,13 @@ public:
     int getIdleTime() const { return idle_time; }
 
     /**
-   * @brief Getter method for the idle time associated with the item.
-   *
-   * @return int The idle time associated with the item.
-   */
-    void setIdleTime(int idle_time_s) { idle_time = idle_time_s; } 
+     * @brief Sets the idle time associated with the item.
+     *
+     * This method assigns the specified idle time to the item.
+     *
+     * @param idle_time_s The new idle time to set for the item.
+     */
+    void setIdleTime(int idle_time_s) { idle_time = idle_time_s; }
 
     /**
     * @brief Overloaded less than operator for comparing items based on their IDs.
@@ -143,6 +149,26 @@ TEST_CASE("Item class") {
     CHECK(item1 < item2);
     CHECK(item1.compareByOccurTime(item2));
     CHECK(item1.compareByIdleTime(item2));
+
+    SUBCASE("setWorkTime") {
+        Item<int> item;
+        item.setWorkTime(10);
+        CHECK(item.getWorkTime() == 10);  // Verifying that work time is set correctly
+    }
+
+    // Testing workTimeDecrement
+    SUBCASE("workTimeDecrement") {
+        Item<int> item(1, 10, 5, 2); // Initializing item with work time of 5
+        item.workTimeDecrement();
+        CHECK(item.getWorkTime() == 4);  // Verifying that work time is decremented by 1
+    }
+
+    // Testing setIdleTime
+    SUBCASE("setIdleTime") {
+        Item<int> item;
+        item.setIdleTime(20);
+        CHECK(item.getIdleTime() == 20);  // Verifying that idle time is set correctly
+    }
 }
 
 #endif

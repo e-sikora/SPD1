@@ -121,8 +121,10 @@ void Problem<Item>::displayResult(std::vector<Item> order, int time){
 
 template<class Item>
 void Problem<Item>::permutationSort() {
+
     std::string file_destination = ("data/perm_result.txt"); // commented due to unittesting
     //std::vector<Item> orginal = main_list;
+
     int perm_work_time = 0;
     int best_time;
     std::vector<Item> best_order;
