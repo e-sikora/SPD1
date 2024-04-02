@@ -1,100 +1,77 @@
-[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
-[![Build Status](https://travis-ci.org/bsamseth/cpp-project.svg?branch=master)](https://travis-ci.org/bsamseth/cpp-project)
-[![Build status](https://ci.appveyor.com/api/projects/status/g9bh9kjl6ocvsvse/branch/master?svg=true)](https://ci.appveyor.com/project/bsamseth/cpp-project/branch/master)
-[![Coverage Status](https://coveralls.io/repos/github/bsamseth/cpp-project/badge.svg?branch=master)](https://coveralls.io/github/bsamseth/cpp-project?branch=master)
-[![codecov](https://codecov.io/gh/bsamseth/cpp-project/branch/master/graph/badge.svg)](https://codecov.io/gh/bsamseth/cpp-project)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/eb004322b0d146239a57eb242078e179)](https://www.codacy.com/app/bsamseth/cpp-project?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=bsamseth/cpp-project&amp;utm_campaign=Badge_Grade)
-[![Language grade: C/C++](https://img.shields.io/lgtm/grade/cpp/g/bsamseth/cpp-project.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/bsamseth/cpp-project/context:cpp)
-[![Total alerts](https://img.shields.io/lgtm/alerts/g/bsamseth/cpp-project.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/bsamseth/cpp-project/alerts/)
-[![license](https://img.shields.io/badge/license-Unlicense-blue.svg)](https://github.com/bsamseth/cpp-project/blob/master/LICENSE)
-[![Lines of Code](https://tokei.rs/b1/github/bsamseth/cpp-project)](https://github.com/Aaronepower/tokei)
-[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/bsamseth/cpp-project.svg)](http://isitmaintained.com/project/bsamseth/cpp-project "Average time to resolve an issue")
-[![Percentage of issues still open](http://isitmaintained.com/badge/open/bsamseth/cpp-project.svg)](http://isitmaintained.com/project/bsamseth/cpp-project "Percentage of issues still open")
 
-# Boiler plate for C++ projects
+# Discrete Process Control Course
+## Single-machine problems
 
-This is a boiler plate for C++ projects. What you get:
+The exercises performed processed basic single-machine problems. As the name suggests
+a single machine was available, as well as sets of tasks with different numbers of tasks. Each set was distinguished by unique relationships
+values of rj , qj and pj , thus making it possible to check the correctness of the implemented algorithms for serialization of
+tasks.
 
--   Sources, headers and mains separated in distinct folders
--   Use of modern [CMake](https://cmake.org/) for much easier compiling
--   Setup for tests using [doctest](https://github.com/onqtam/doctest)
--   Continuous testing with [Travis-CI](https://travis-ci.org/), [Appveyor](https://www.appveyor.com) and [GitHub Actions](https://github.com/features/actions), with support for C++17.
--   Code coverage reports, including automatic upload to [Coveralls.io](https://coveralls.io/) and/or [Codecov.io](https://codecov.io)
--   Code documentation with [Doxygen](http://www.stack.nl/~dimitri/doxygen/)
+## Prerequisites
 
-![Demo of usage](https://i.imgur.com/foymVfy.gif)
+Before you begin, ensure you have met the following requirements:
+- Python 3.9 (min)
+- CMake
+- A build system (Make or Ninja)
 
-## Structure
-``` text
-.
-├── CMakeLists.txt
-├── app
-│   └── main.cpp
-├── include
-│   ├── example.h
-│   └── exampleConfig.h.in
-├── src
-│   └── example.cpp
-└── tests
-    ├── dummy.cpp
-    └── main.cpp
-```
+### Linux & macOS
 
-Sources go in [src/](src/), header files in [include/](include/), main programs in [app/](app), and
-tests go in [tests/](tests/) (compiled to `unit_tests` by default).
+- Install Python 3, CMake, and build tools (Make is usually pre-installed; Ninja is optional):
+  ```bash
+  sudo apt-get update
+  sudo apt-get install python3 cmake make  # For Ubuntu/Debian
+  brew install python cmake make                 # For macOS
+  ```
 
-If you add a new executable, say `app/hello.cpp`, you only need to add the following two lines to [CMakeLists.txt](CMakeLists.txt):
+### Windows
 
-```cmake
-add_executable(main app/main.cpp)   # Name of exec. and location of file.
-target_link_libraries(main PRIVATE ${LIBRARY_NAME})  # Link the executable to lib built from src/*.cpp (if it uses it).
-```
+- Install Python 3 from the [official Python website](https://www.python.org/downloads/).
+- Install CMake and Ninja using [Scoop](https://scoop.sh/) or [Chocolatey](https://chocolatey.org/), or download from the official websites.
 
-You can find the example source code that builds the `main` executable in [app/main.cpp](app/main.cpp) under the `Build` section in [CMakeLists.txt](CMakeLists.txt).
-If the executable you made does not use the library in [src/](src), then only the first line is needed.
+## Automated Build and Run
 
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd <repository-name>
+   ```
 
+2. Run the Python script with the path to your data file as an argument:
+   ```bash
+   python3 build_run.py ./data/test_1.txt
+   ```
+   Replace `build_run.py` with the name of the Python script and adjust the data file path as needed.
 
-## Building
+## Manual Build and Run Instructions
 
-Build by making a build directory (i.e. `build/`), run `cmake` in that dir, and then use `make` to build the desired target.
+1. **Clone the repository:**
+   ```bash
+   git clone <repository-url>
+   cd <repository-name>
+   ```
 
-Example:
+2. **Create and enter the build directory:**
+   ```bash
+   mkdir build && cd build
+   ```
 
-```bash
-mkdir build && cd build
-cmake .. -DCMAKE_BUILD_TYPE=[Debug | Coverage | Release]
-make
-./main
-make test      # Makes and runs the tests.
-make coverage  # Generate a coverage report.
-make doc       # Generate html documentation.
-```
+3. **Configure the project with CMake:**
+   ```bash
+   cmake ..
+   ```
 
-## .gitignore
+4. **Build the project:**
+    - Using Make:
+      ```bash
+      make
+      ```
+    - Or, using Ninja (if installed):
+      ```bash
+      ninja
+      ```
 
-The [.gitignore](.gitignore) file is a copy of the [Github C++.gitignore file](https://github.com/github/gitignore/blob/master/C%2B%2B.gitignore),
-with the addition of ignoring the build directory (`build/`).
-
-## Services
-
-If the repository is activated with Travis-CI, then unit tests will be built and executed on each commit.
-The same is true if the repository is activated with Appveyor.
-
-If the repository is activated with Coveralls/Codecov, then deployment to Travis will also calculate code coverage and
-upload this to Coveralls.io and/or Codecov.io
-
-## Setup
-
-### Using the GitHub template
-Click the `Use this template` button to make a new repository from this template.
-
-### From command line
-When starting a new project, you probably don't want the history of this repository. To start fresh you can use
-the [setup script](setup.sh) as follows:
-```bash
-git clone https://github.com/bsamseth/cpp-project  # Or use ssh-link if you like.
-cd cpp-project
-bash setup.sh
-```
-The result is a fresh Git repository with one commit adding all files from the boiler plate.
+5. **Run the executable with the data file:**
+   ```bash
+   .<executable_name> ../data/test_1.txt
+   ```
+   Replace `main` with the name of your project's executable and adjust the path to your data file as necessary.
