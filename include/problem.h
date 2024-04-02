@@ -6,7 +6,7 @@
 #include <sstream>
 #include <algorithm>
 #include <queue>
-
+#include <functional>
 #include "item.h"
 
 /**
@@ -105,7 +105,7 @@ public:
      * @param list The list from which the item should be erased.
      * @param serial The serial number of the item to be removed.
      */
-    void eraseChosenElement(std::vector<Item> &list, const int serial);
+    void eraseChosenVectorElement(std::vector<Item> &list, const int serial);
 
 
     /**
@@ -265,14 +265,14 @@ TEST_CASE("permutationSort") {
 //    }
 //}
 
-TEST_CASE("Testing eraseChosenElement with Item<int>") {
+TEST_CASE("Testing eraseChosenVectorElement with Item<int>") {
     Problem<Item<int>> problem; // Using Problem with Item<int>
     Item<int> item1 = Item<int>(1, 1, 1, 1);
     Item<int> item2 = Item<int>(2, 2, 2, 2);
     Item<int> item3 = Item<int>(3, 3, 3, 3);
     SUBCASE("Erase an existing element") {
         std::vector<Item<int>> list = {item1, item2, item3};
-        problem.eraseChosenElement(list, 2);
+        problem.eraseChosenVectorElement(list, 2);
         CHECK(list.size() == 2);
         CHECK(list[0].getId() == 1);
         CHECK(list[1].getId() == 3);
@@ -280,13 +280,13 @@ TEST_CASE("Testing eraseChosenElement with Item<int>") {
 
     SUBCASE("Attempt to erase a non-existing element") {
         std::vector<Item<int>> list = {item1, item2, item3};
-        problem.eraseChosenElement(list, 4);
+        problem.eraseChosenVectorElement(list, 4);
         CHECK(list.size() == 3); // Size should remain unchanged
     }
 
     SUBCASE("Erase from an empty list") {
         std::vector<Item<int>> list;
-        problem.eraseChosenElement(list, 1);
+        problem.eraseChosenVectorElement(list, 1);
         CHECK(list.empty());
     }
 }
