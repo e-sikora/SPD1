@@ -45,10 +45,10 @@ if run_command(f'cmake -G "{build_system}" ..') != 0:
     sys.exit(1)
 
 # Step 4: Build the project
-# build_command = "ninja" if build_system == "Ninja" else "make"
-# if run_command(build_command) != 0:
-#     print("Build failed.")
-#     sys.exit(1)
+build_command = "ninja" if build_system == "Ninja" else "make"
+if run_command(build_command) != 0:
+    print("Build failed.")
+    sys.exit(1)
 
 # Step 5: Run the program with the data file
 # Replace 'your_program_name' with the actual path to your executable

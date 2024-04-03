@@ -133,7 +133,7 @@ void Problem<Item>::permutationSort() {
         if (first_iteration == true) {
             best_time = perm_work_time;
             best_order.assign(main_list.begin(), main_list.end());
-            this->createOrClearFile(file_destination); // commented due to unittesting
+//            this->createOrClearFile(file_destination); // commented due to unittesting
             first_iteration = false;
         }
         if (perm_work_time < best_time) {
@@ -141,7 +141,7 @@ void Problem<Item>::permutationSort() {
             best_order.assign(main_list.begin(), main_list.end());
         }
 
-        this->savePermResult(main_list, perm_work_time, file_destination); // commented due to unittesting
+//        this->savePermResult(main_list, perm_work_time, file_destination); // commented due to unittesting
 
     } while (std::next_permutation(main_list.begin(), main_list.end()));
 
